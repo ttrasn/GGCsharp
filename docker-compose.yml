@@ -1,0 +1,22 @@
+version: '3.8'
+name: gamesglobal-game-management
+services:
+    backend:
+        container_name: GG_backend
+        build: ./backend
+        ports:
+            - "5023:8080"
+        depends_on:
+            - mongodb
+    mongodb:
+        container_name: GG_MongoDB
+        image: mongo:latest
+        ports:
+            - "27017:27017"
+        environment:
+            MONGO_INITDB_ROOT_USERNAME:
+            MONGO_INITDB_ROOT_PASSWORD:
+            MONGO_INITDB_DATABASE: game_management
+        volumes:
+            - ./backend/script/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+

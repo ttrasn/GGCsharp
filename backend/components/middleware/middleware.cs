@@ -20,7 +20,7 @@ public class JwtMiddleware
         this.jwt_issuer = _appSettings.Value.JwtIssuer;
     }
 
-    public async Task Invoke(HttpContext context, UserService userService)
+    public Task Invoke(HttpContext context, UserService userService)
     {
         var token = context.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
         if (token != null)
@@ -28,7 +28,7 @@ public class JwtMiddleware
             attachUserToContext(context, userService, token);
         }
 
-        _next(context);
+        return this._next(context);
     }
 
     private void attachUserToContext(HttpContext context, UserService userService, string token)

@@ -1,5 +1,4 @@
 using System.Reflection;
-using backend.components.jwt;
 using backend.components.middleware;
 using backend.controllers;
 using backend.models;
@@ -10,6 +9,9 @@ using Microsoft.OpenApi.Models;
 using UserService = backend.services.UserService;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Logging.ClearProviders();
+builder.Logging.AddConsole();
 
 builder.Services.Configure<AppSettings>(builder.Configuration.GetSection("AppSettings"));
 
@@ -22,16 +24,6 @@ builder.Services.AddControllers()
     .AddJsonOptions(
         options => options.JsonSerializerOptions.PropertyNamingPolicy = null);
 
-builder.Services.AddAuthentication(options =>
-{
-    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-}).AddJwtBearer(options =>
-{
-    options.RequireHttpsMetadata = false;
-    options.SaveToken = true;
-    options.TokenValidationParameters = new JwtSecurityTokenHandlerWrapper().PrincipleConfig;
-});
 
 builder.Services.AddAuthorization(options =>
 {

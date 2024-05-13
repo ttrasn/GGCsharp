@@ -48,7 +48,7 @@ public class AuthenticationService : IAuthenticationService
 
 
         var token = new JwtSecurityToken(jwt_issuer, jwt_issuer, claims,
-            expires: DateTime.UtcNow.AddHours(1), signingCredentials: credetial);
+            expires: DateTime.UtcNow.AddDays(7), signingCredentials: credetial);
 
         return new JwtSecurityTokenHandler().WriteToken(token);
     }

@@ -19,6 +19,7 @@ public class UserService
 
         _usersCollection = mongoDatabase.GetCollection<User>(
             setting.Value.UsersCollectionName);
+        Console.WriteLine(_usersCollection);
     }
 
 

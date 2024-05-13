@@ -13,10 +13,14 @@ namespace backend.controllers;
 [Produces("application/json")]
 public class GameController : ControllerBase
 {
+    private readonly ILogger _logger;
     private readonly GameService _gameService;
 
-    public GameController(GameService service) =>
+    public GameController(ILoggerFactory logger, GameService service)
+    {
         _gameService = service;
+        _logger = logger.CreateLogger("GameAPI");
+    }
 
     [HttpGet]
     public Pagination<Game> Get([FromQuery] GameRequest req) =>
@@ -96,43 +100,48 @@ public class GameController : ControllerBase
     }
 
 
-    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [HttpPost]
     [Authorization(UserType.Admin)]
     [Route("bunch-insert")]
     public async Task<IActionResult> BunchInsert(IFormFile file)
     {
+        int totalGames = 0;
+        _logger.LogInformation("upload started");
         string fileContents;
         using (var stream = file.OpenReadStream())
         using (var reader = new StreamReader(stream))
         {
             fileContents = await reader.ReadToEndAsync();
-        }
-
-        try
-        {
-            var settings = new JsonSerializerSettings
+            try
             {
-                ContractResolver = new DefaultContractResolver
+                var settings = new JsonSerializerSettings
                 {
-                    NamingStrategy = new SnakeCaseNamingStrategy()
-                }
-            };
-            Game[] games = JsonConvert.DeserializeObject<Game[]>(fileContents, settings) ??
-                           Array.Empty<Game>();
-            _gameService.BunchInsert(games);
-        }
-        catch (FormatException fex)
-        {
-            Console.WriteLine(fex);
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine(ex.ToString());
+                    ContractResolver = new DefaultContractResolver
+                    {
+                        NamingStrategy = new SnakeCaseNamingStrategy()
+                    }
+                };
+                Game[] games = JsonConvert.DeserializeObject<Game[]>(fileContents, settings) ??
+                               Array.Empty<Game>();
+                _gameService.BunchInsert(games);
+                totalGames = games.Length;
+                _logger.LogInformation("games inserted");
+            }
+            catch (FormatException fex)
+            {
+                _logger.LogError(fex.ToString());
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.ToString());
+            }
         }
 
+        if (totalGames > 0)
+            return Ok($"{totalGames} games inserted successfully.");
 
-        return Ok();
+        return Ok("the file doesn't have games.");
     }
 }
