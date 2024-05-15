@@ -1,14 +1,15 @@
 import Image from "next/image";
 import React from "react";
+import {Game, GameData} from "@/components/datatype";
 
 
-export default function Games(data) {
+export default function Games({games}:GameData) {
     return (
         <>
             <section className="games" id="games">
-        {data.games?.Data?.map((g) =>
+        {games?.Data?.map((g:Game) =>
             <div key={g.Id} className="game">
-                <a href="http://google.com/">
+                <a href={"https://gamesglobal.com/games/"+g.StudioName+"/"+g.GameTitle} target="_blank" rel="noopener noreferrer">
                     <Image
                         src={g.ImageUrl}
                         width={120}

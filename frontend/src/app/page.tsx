@@ -1,11 +1,10 @@
 import Image from "next/image";
-import StudioGames from "../components/tab";
+import StudioGames from "../components/main";
 
 
 export async function GetStudios():Promise<[]> {
   const res = await fetch(process.env.API_URL+'/api/Game/studios');
   return res.json();
-
 }
 
 export default async function Home() {

@@ -63,11 +63,10 @@ pages page.active {
 }
 
 
-/* Tabs*/
-
 .game-list{
   max-width: 800px;
   background-color: #313131;
+  border-radius: 10px;
 }
 
 .carousel-wrapper {
@@ -79,6 +78,7 @@ pages page.active {
   padding: 5px;
   height: 60px;
   border-radius: 10px 10px 0 0;
+  position: relative;
 }
 
 .wrapped-container {
@@ -89,7 +89,7 @@ pages page.active {
 }
 
 .carousel {
-  width: 100%;
+  width: calc(100% - 65px);
   height: 100%;
   position: relative;
   overflow-y: hidden;
@@ -97,7 +97,10 @@ pages page.active {
   gap: 1em;
   scrollbar-width: none;
   align-self: center;
-  margin: 5px;
+  left: 0;
+  right: 0;
+  margin: auto;
+  z-index: 1;
 }
 
 .arrows {
@@ -110,6 +113,7 @@ pages page.active {
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-shrink: 0;
   align-self: center;
   opacity: 1;
   cursor: pointer;
@@ -117,11 +121,23 @@ pages page.active {
   padding: 0;
   pointer-events: all;
   box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.4);
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 2;
+  right: auto;
 }
 
-.arrows:hover {
+.carousel-wrapper .arrows.left-arrow{
+  left: 10px;
+}
+.carousel-wrapper .arrows.right-arrow{
+  right: 10px;
+}
+
+.arrows:hover:not(.arrow-inactive) {
   background-color: #4b4b4b;
-  transform: scale(1.1);
+  transform: translateY(-50%) scale(1.1);
 }
 
 .arrows img {
@@ -134,9 +150,6 @@ pages page.active {
   cursor: auto;
 }
 
-.arrow-inactive:hover {
-  transform: none;
-}
 
 .carousel-item {
   min-width: 80px;
@@ -181,35 +194,62 @@ pages page.active {
   grid-template-rows: 1fr 1fr;
   padding: 10px 5px;
   height: 300px;
+  gap: 3px;
 }
 
-.game{
-  transform: translateX(-100%);
-  -webkit-transform: translateX(-100%);
+.game a{
+  transform: scale(0);
+  opacity: 0;
   animation: slide-in 0.5s forwards;
-  -webkit-animation: slide-in 0.5s forwards;
-}
-
-@keyframes slide-in {
-  100% { transform: translateX(0%); }
-}
-
-@-webkit-keyframes slide-in {
-  100% { -webkit-transform: translateX(0%); }
-}
-
-.game{
-  margin: 3px;
   text-align: center;
-  border: 1px solid #707070;
   border-radius: 5px;
   transition: margin 0.1s;
+  border: 2px solid #fff5;
+  overflow: hidden;
+  padding: 15px;
+  display: block;
 }
 
-.game:hover{
-  margin: 1px;
-  box-shadow: 0 0 3px #707070;
+.game a img {
+  filter: blur(20px);
+  animation: blurimg 1s forwards 0.5s;
 }
+
+
+.game:hover{
+  margin: 2px;
+}
+
+
+.pagination {
+  margin-top: 10px;
+  width: 100%;
+  text-align: center;
+  height: 40px;
+}
+
+.pagination a {
+  color: #fff;
+  padding: 8px 14px;
+  text-decoration: none;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 5px;
+  margin: 5px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  cursor: pointer;
+}
+.pagination a.inactive{
+  background: rgba(255, 255, 255, 0);
+  cursor: initial;
+}
+
+.pagination a.active {
+  background: rgba(255, 255, 255, 0.5);
+}
+
+.pagination a:hover:not(.active):not(.inactive) {background: rgba(255, 255, 255, 0.6);}
 
 
 @media (pointer: coarse) {
@@ -222,30 +262,13 @@ pages page.active {
   }
 }
 
-.pagination {
-  margin-top: 10px;
-  width: 100%;
-  text-align: center;
-  height: 40px;
+@keyframes blurimg {
+  100% { filter: blur(0); }
 }
 
-.pagination a {
-  color: #fff;
-  padding: 8px 16px;
-  text-decoration: none;
-  background: rgba(255, 255, 255, 0.2);
-  border-radius: 5px;
-  margin: 5px;
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+@keyframes slide-in {
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
 }
-.pagination a.inactive{
-  background: rgba(255, 255, 255, 0);
-}
-
-.pagination a.active {
-  background: rgba(255, 255, 255, 0.5);
-}
-
-.pagination a:hover:not(.active) {background: rgba(255, 255, 255, 0.6);}
