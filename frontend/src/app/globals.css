@@ -1,0 +1,251 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 255, 255, 255;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 0, 0, 0;
+    --background-end-rgb: 0, 0, 0;
+  }
+}
+
+body {
+  color: rgb(var(--foreground-rgb));
+  background: linear-gradient(
+      to bottom,
+      transparent,
+      rgb(var(--background-end-rgb))
+    )
+    rgb(var(--background-start-rgb));
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+
+
+pages  {
+  color: white;
+  text-align: center;
+  display: block;
+  -webkit-overflow-scrolling: touch;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+pages .container {
+  white-space: nowrap;
+  font-size: 0px;
+}
+
+pages page{
+  display: inline-block;
+  -webkit-transition: 800ms ease-out opacity;
+  -moz-transition: 800ms ease-out opacity;
+  -ms-transition: 800ms ease-out opacity;
+  transition: 800ms ease-out opacity;
+
+  font-size: 50px;
+}
+
+pages page.active {
+  opacity: 1 !important;
+}
+
+
+/* Tabs*/
+
+.game-list{
+  max-width: 800px;
+  background-color: #313131;
+}
+
+.carousel-wrapper {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.5em;
+  width: 100%;
+  background-color: #252525;
+  padding: 5px;
+  height: 60px;
+  border-radius: 10px 10px 0 0;
+}
+
+.wrapped-container {
+  display: flex;
+  overflow: hidden;
+  width: 95%;
+  justify-content: center;
+}
+
+.carousel {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  overflow-y: hidden;
+  display: flex;
+  gap: 1em;
+  scrollbar-width: none;
+  align-self: center;
+  margin: 5px;
+}
+
+.arrows {
+  width: 24px;
+  height: 24px;
+  outline: none;
+  border: none;
+  background-color: #4b4b4b;
+  border-radius: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  align-self: center;
+  opacity: 1;
+  cursor: pointer;
+  transition: all 0.1s ease;
+  padding: 0;
+  pointer-events: all;
+  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.4);
+}
+
+.arrows:hover {
+  background-color: #4b4b4b;
+  transform: scale(1.1);
+}
+
+.arrows img {
+  width: 16px;
+  height: 16px;
+}
+
+.arrow-inactive {
+  opacity: 0.5;
+  cursor: auto;
+}
+
+.arrow-inactive:hover {
+  transform: none;
+}
+
+.carousel-item {
+  min-width: 80px;
+  cursor: pointer;
+  opacity: 0.9;
+  font-size: 14px;
+}
+.carousel-item.active,.carousel-item:hover {
+  font-weight: bold;
+  opacity: 1;
+}
+.carousel-item span {
+  margin: 5px 0;
+}
+
+
+.carousel-wrapper.scrollbar-overflow ::-webkit-scrollbar {
+  height: 6px;
+}
+
+.carousel-wrapper ::-webkit-scrollbar {
+  height: 0px;
+}
+
+.carousel-wrapper ::-webkit-scrollbar-track {
+  background: #c0b6af;
+  border-radius: 10pt;
+}
+
+.carousel-wrapper ::-webkit-scrollbar-thumb {
+  background: #5e4c5a;
+  border-radius: 10pt;
+}
+
+.carousel-wrapper ::-webkit-scrollbar-thumb:hover {
+  background: #2d242b;
+}
+
+.games{
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  padding: 10px 5px;
+  height: 300px;
+}
+
+.game{
+  transform: translateX(-100%);
+  -webkit-transform: translateX(-100%);
+  animation: slide-in 0.5s forwards;
+  -webkit-animation: slide-in 0.5s forwards;
+}
+
+@keyframes slide-in {
+  100% { transform: translateX(0%); }
+}
+
+@-webkit-keyframes slide-in {
+  100% { -webkit-transform: translateX(0%); }
+}
+
+.game{
+  margin: 3px;
+  text-align: center;
+  border: 1px solid #707070;
+  border-radius: 5px;
+  transition: margin 0.1s;
+}
+
+.game:hover{
+  margin: 1px;
+  box-shadow: 0 0 3px #707070;
+}
+
+
+@media (pointer: coarse) {
+  .carousel {
+    overflow-x: auto;
+    scrollbar-width: thin;
+  }
+  .carousel-wrapper ::-webkit-scrollbar {
+    height: 6px;
+  }
+}
+
+.pagination {
+  margin-top: 10px;
+  width: 100%;
+  text-align: center;
+  height: 40px;
+}
+
+.pagination a {
+  color: #fff;
+  padding: 8px 16px;
+  text-decoration: none;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 5px;
+  margin: 5px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+.pagination a.inactive{
+  background: rgba(255, 255, 255, 0);
+}
+
+.pagination a.active {
+  background: rgba(255, 255, 255, 0.5);
+}
+
+.pagination a:hover:not(.active) {background: rgba(255, 255, 255, 0.6);}

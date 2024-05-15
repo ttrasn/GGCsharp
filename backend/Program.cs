@@ -10,6 +10,14 @@ using UserService = backend.services.UserService;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: "All",
+                      policy  =>
+                      {
+                          policy.WithOrigins("*");
+                      });
+});
 builder.Logging.ClearProviders();
 builder.Logging.AddConsole();
 
@@ -73,7 +81,7 @@ builder.Services.AddSwaggerGen(x =>
 });
 
 var app = builder.Build();
-
+app.UseCors("All");
 app.UseSwagger();
 app.UseSwaggerUI(options =>
 {
