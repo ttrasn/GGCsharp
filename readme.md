@@ -1,4 +1,4 @@
-# Project Name
+# GG Fullstack assessment
 
 ## Overview
 This project is a full-stack application with a robust backend and an intuitive frontend. It includes several key features such as Swagger documentation, pagination, bulk data insertion, and simple authentication and authorization mechanisms. The project is containerized using Docker for easy setup and deployment.
