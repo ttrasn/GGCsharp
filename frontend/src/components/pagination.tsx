@@ -15,8 +15,8 @@ export default function Pagination({setPageNumber, pages, studio}:PageData) {
         }
     }
     const pageNumbers = [];
-    for (let i = start; i < pagination.TotalPages; i++) {
-        pageNumbers.push(i)
+    for (let i = start; i <= pagination.TotalPages; i++) {
+        pageNumbers.push(i);
         if (pageNumbers.length == 5) {
             break;
         }

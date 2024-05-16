@@ -8,6 +8,11 @@ services:
             - "5023:8080"
         depends_on:
             - mongodb
+    frontend:
+        container_name: GG_frontend
+        build: ./frontend
+        ports:
+            - "5024:3000"
     mongodb:
         container_name: GG_MongoDB
         image: mongo:latest

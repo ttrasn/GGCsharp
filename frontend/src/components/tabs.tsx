@@ -4,6 +4,7 @@ import React from "react";
 
 
 export default function StudioTabs({studios,setStudioName,setPageNumber}:StudioTabsData) {
+    if (studios == null) return null;
     const updatePage = (s:string) =>{
         setStudioName(s);
         setPageNumber(1);

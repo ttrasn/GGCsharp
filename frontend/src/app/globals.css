@@ -64,7 +64,7 @@ pages page.active {
 
 
 .game-list{
-  max-width: 800px;
+  width: 800px;
   background-color: #313131;
   border-radius: 10px;
 }

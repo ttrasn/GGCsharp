@@ -3,7 +3,6 @@ import React, {useState, useEffect} from 'react'
 import Script from "next/script";
 import Games from "@/components/games";
 import Pagination from "@/components/pagination";
-import {StudioList} from "@/components/datatype";
 import StudioTabs from "@/components/tabs";
 
 const GetGames = async (s:string,p?:number) =>{
@@ -12,12 +11,18 @@ const GetGames = async (s:string,p?:number) =>{
     return res.json();
 }
 
-export default function StudioGames({studios}:StudioList) {
+const GetStudios = async () => {
+    const res = await fetch(process.env.API_URL+'/api/Game/studios');
+    return res.json();
+}
+
+export default function StudioGames() {
     const [gamesList, setGamesList] = useState(null);
     const [pagination, setPagination] =
         useState({pages:null,studio:""});
     const [pageNumber, setPageNumber] = useState(1);
     const [studioName, setStudioName] = useState("");
+    const [studios, setStudios] = useState(null);
 
     const fetchGames = async (s: string,page?:number) => {
         setGamesList(null);// empty game list for css animation
@@ -40,8 +45,12 @@ export default function StudioGames({studios}:StudioList) {
                 </div>
             </section>
             <Script src="/functions.js" onLoad={() => {
-                intractTabs();
-                fetchGames("");
+                GetStudios().then(v =>{
+                    setStudios(v);
+                    intractTabs();
+                    fetchGames("");
+                });
+
             }}/>
         </>
     )

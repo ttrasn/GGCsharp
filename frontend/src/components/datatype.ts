@@ -6,7 +6,7 @@ export interface StudioList {
     studios: Studio[]
 }
 export interface StudioTabsData {
-    studios: Studio[],
+    studios: Studio[] | null,
     setStudioName:setStudioName,
     setPageNumber:setPageNumber,
 }

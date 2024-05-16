@@ -2,13 +2,7 @@ import Image from "next/image";
 import StudioGames from "../components/main";
 
 
-export async function GetStudios():Promise<[]> {
-  const res = await fetch(process.env.API_URL+'/api/Game/studios');
-  return res.json();
-}
-
 export default async function Home() {
-  const studios = await GetStudios();
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
       <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">
@@ -31,7 +25,7 @@ export default async function Home() {
         </div>
       </div>
 
-    <StudioGames studios={studios}/>
+    <StudioGames />
 
       <div className="mb-32 grid text-center lg:mb-0 lg:w-full lg:max-w-5xl lg:grid-cols-4 lg:text-left">
         

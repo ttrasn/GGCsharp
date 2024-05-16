@@ -79,7 +79,9 @@ function intractTabs() {
     let leftArrow = document.getElementsByClassName("left-arrow")[0];
     let rightArrow = document.getElementsByClassName("right-arrow")[0];
     let carousels = document.getElementsByClassName("carousel");
-
+    if (carousels.length === 0){
+        return;
+    }
 
     autoSlidePosRight(0, carousels, rightArrow);
     autoSlidePosLeft(0, carousels, leftArrow);
